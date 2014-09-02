@@ -28,9 +28,7 @@
 	<script type="text/javascript">
 		var g = {
 			canvas: null,
-			context: null,
-
-			mouse: null,
+			context: null
 		}
 
 		function main() {
@@ -39,7 +37,7 @@
 
 			canvas.width = canvas.height = 400;
 
-			mouse = new LibraryMouse(canvas);
+			var app = new Horde(canvas);
 
 			run();
 		}
@@ -61,6 +59,8 @@
 
 	<script type="text/javascript" src="js/lib/Math.js"></script>
 	<script type="text/javascript" src="js/lib/LibraryMouse.min.js"></script>
+
+	<script type="text/javascript" src="js/Horde.js"></script>
 
 </body>
 

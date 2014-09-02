@@ -13,16 +13,22 @@ var Horde = (function(){
 
 		this.initMouse();
 		this.initKeyboard();
+
+		this.player = new HPlayer(this.context);
 	};
 
 
 	Horde.prototype.update = function() {
 		// console.log("update");
+		this.player.update();
 	};
 
 	Horde.prototype.draw = function() {
 		// console.log("draw");
+		this.context.fillStyle = "#000000";
 		this.context.fillRect(0,0,this.context.canvas.width, this.context.canvas.height);
+		
+		this.player.draw();
 	};
 
 	Horde.prototype.initMouse = function() {
@@ -41,29 +47,9 @@ var Horde = (function(){
 
 	Horde.prototype.initKeyboard = function() {
 		document.onkeydown = function(e){
-			// console.log(e.keyCode);
+			console.log(e.keyCode);
 
-			switch(e.keyCode){
-				// up
-				case 87:
-				case 38:
-					break;
-				
-				// left
-				case 65:
-				case 37:
-					break;
-
-				// down
-				case 83:
-				case 40:
-					break;
-
-				// right
-				case 68:
-				case 39:
-					break;
-			}
+			this.player.onkeydown(e);
 		}
 	};
 

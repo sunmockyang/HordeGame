@@ -26,32 +26,17 @@
 	<a class="credit" href="http://sunmock.com">Sunmock Yang, Sept. 2014</a>
 	
 	<script type="text/javascript">
-		var g = {
-			canvas: null,
-			context: null
-		}
+		var HordeGame = null;
 
 		function main() {
-			var canvas = g.canvas = document.getElementById('canvas');
-			var context = g.context = canvas.getContext("2d");
-
+			var canvas = document.getElementById('canvas');
+			var context = canvas.getContext("2d");
 			canvas.width = canvas.height = 400;
 
-			var app = new Horde(canvas);
-
-			run();
+			HordeGame = new Horde(canvas);
+			HordeGame.start();
 		}
 
-
-		function update(){
-
-		}
-
-		function draw(){
-
-		}
-
-		function run(){update();draw();window.requestAnimationFrame(run);}
 		window.onload = main;
 		window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
 

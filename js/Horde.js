@@ -5,12 +5,25 @@ var Horde = (function(){
 	}
 
 	var Horde = function(canvas){
+		this.running = true;
+
 		this.canvas = canvas;
+		this.context = canvas.getContext("2d");
 		this.mouse = new LibraryMouse(canvas);
 
 		this.initMouse();
 		this.initKeyboard();
-	}
+	};
+
+
+	Horde.prototype.update = function() {
+		// console.log("update");
+	};
+
+	Horde.prototype.draw = function() {
+		// console.log("draw");
+		this.context.fillRect(0,0,this.context.canvas.width, this.context.canvas.height);
+	};
 
 	Horde.prototype.initMouse = function() {
 		this.mouse = new LibraryMouse(this.canvas);
@@ -53,6 +66,15 @@ var Horde = (function(){
 			}
 		}
 	};
+
+	Horde.prototype.start = function() {
+		this.running = true;
+		run.call(this);
+	};
+
+	Horde.prototype.stop = function() { this.running = false; };
+	
+	function run(){if(this.running){this.update();this.draw();window.requestAnimationFrame(run.bind(this));}};
 
 	return exports;
 

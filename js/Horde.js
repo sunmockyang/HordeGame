@@ -10,11 +10,12 @@ var Horde = (function(){
 		this.canvas = canvas;
 		this.context = canvas.getContext("2d");
 		this.mouse = new LibraryMouse(canvas);
+		this.keyboard = new KeyPressHandler();
+
+		this.player = new HPlayer(this.context);
 
 		this.initMouse();
 		this.initKeyboard();
-
-		this.player = new HPlayer(this.context);
 	};
 
 
@@ -46,10 +47,18 @@ var Horde = (function(){
 	};
 
 	Horde.prototype.initKeyboard = function() {
-		document.onkeydown = function(e){
-			console.log(e.keyCode);
+		// document.onkeydown = (function(e){
+		// 	// console.log(e.keyCode);
 
-			this.player.onkeydown(e);
+		// 	this.player.onkeydown(e);
+		// }).bind(this);
+		document.onkeydown = this.keyboard.onkeydown.bind(this.keyboard);
+		document.onkeyup = this.keyboard.onkeyup.bind(this.keyboard);
+	};
+
+	Horde.prototype.onKeyboard = function() {
+		if(this.player.onkeydown(this.keyboard)){
+			return true;
 		}
 	};
 
@@ -60,7 +69,7 @@ var Horde = (function(){
 
 	Horde.prototype.stop = function() { this.running = false; };
 	
-	function run(){if(this.running){this.update();this.draw();window.requestAnimationFrame(run.bind(this));}};
+	function run(){if(this.running){this.onKeyboard();this.update();this.draw();window.requestAnimationFrame(run.bind(this));}};
 
 	return exports;
 

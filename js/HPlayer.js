@@ -18,29 +18,34 @@ var HPlayer = HPlayer || (function(){
 		this.context.fillRect(this.pos.x - size/2, this.pos.y - size/2, size, size);
 	};
 
-	HPlayer.prototype.onkeydown = function(e){
-		switch(e.keyCode){
-			// up
-			case KeyMap.Up:
-			case KeyMap.W:
-				return true;
+	HPlayer.prototype.onkeydown = function(keyboard){
+		var handled = false;
 
-			// down
-			case KeyMap.Down:
-			case KeyMap.S:
-				return true;
-			
-			// left
-			case KeyMap.Left:
-			case KeyMap.A:
-				return true;
-
-			// right
-			case KeyMap.Right:
-			case KeyMap.D:
-				return true;
+		// up
+		if(keyboard.isKeyDown(KeyMap.Up, KeyMap.W)){
+			this.pos.y -= 1;
+			handled = true;
 		}
-		return false;
+
+		// down
+		if(keyboard.isKeyDown(KeyMap.Down, KeyMap.S)){
+			this.pos.y += 1;
+			handled = true;
+		}
+		
+		// left
+		if(keyboard.isKeyDown(KeyMap.Left, KeyMap.A)){
+			this.pos.x -= 1;
+			handled = true;
+		}
+
+		// right
+		if(keyboard.isKeyDown(KeyMap.Right, KeyMap.D)){
+			this.pos.x += 1;
+			handled = true;
+		}
+
+		return handled;
 	};
 
 	return exports;

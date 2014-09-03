@@ -69,7 +69,16 @@ var Horde = (function(){
 
 	Horde.prototype.stop = function() { this.running = false; };
 	
-	function run(){if(this.running){this.onKeyboard();this.update();this.draw();window.requestAnimationFrame(run.bind(this));}};
+	function run(){
+		if(this.running){
+			if(this.keyboard.isAnyKeyDown()){
+				this.onKeyboard();
+			}
+			this.update();
+			this.draw();
+			window.requestAnimationFrame(run.bind(this));
+		}
+	};
 
 	return exports;
 

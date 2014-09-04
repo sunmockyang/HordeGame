@@ -17,6 +17,9 @@ var HPlayer = HPlayer || (function(){
 
 		this.map.rotation = getMouseInput.call(this);
 		this.map.playerPos = this.pos;
+
+		// console.log(this.pos.x, this.pos.y);
+		domConsole.innerHTML = Math.floor(this.pos.x) + "," + Math.floor(this.pos.y);
 	};
 
 	function getMouseInput(){
@@ -26,7 +29,7 @@ var HPlayer = HPlayer || (function(){
 		if(y < 0)
 			rotation += Math.PI;
 
-		this.facing = (new Vector(x, y)).normalize();
+		this.facing = (new Vector(-x, -y)).normalize();
 
 		return rotation;
 	}
@@ -48,19 +51,21 @@ var HPlayer = HPlayer || (function(){
 
 		// down
 		if(keyboard.isKeyDown(KeyMap.Down, KeyMap.S)){
-			this.pos.y -= 1;
+			this.pos = this.pos.sub(this.facing);
 			handled = true;
 		}
 		
 		// left
 		if(keyboard.isKeyDown(KeyMap.Left, KeyMap.A)){
-			this.pos.x -= 1;
+			this.pos.x = this.pos.x + this.facing.y;
+			this.pos.y = this.pos.y - this.facing.x;
 			handled = true;
 		}
 
 		// right
 		if(keyboard.isKeyDown(KeyMap.Right, KeyMap.D)){
-			this.pos.x += 1;
+			this.pos.x = this.pos.x - this.facing.y;
+			this.pos.y = this.pos.y + this.facing.x;
 			handled = true;
 		}
 

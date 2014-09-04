@@ -20,7 +20,7 @@ var HMap = (function(){
 	function onImageLoad(){
 		this.canvas.width = this.image.width;
 		this.canvas.height = this.image.height;
-		this.context.drawImage(this.image, 0, 0, this.image.width/3, this.image.height/3);
+		this.context.drawImage(this.image, 0, 0, this.image.width, this.image.height);
 		// this.displayContext.drawImage(this.canvas, 0, 0);
 	};
 
@@ -31,19 +31,38 @@ var HMap = (function(){
 		this.displayContext.save();
 		this.displayContext.translate(this.displayContext.canvas.width/2, this.displayContext.canvas.height/2);
 		this.displayContext.rotate(this.rotation);
-		this.displayContext.drawImage(this.canvas, this.playerPos.x, this.playerPos.y);
+		this.displayContext.drawImage(this.canvas, -this.playerPos.x, -this.playerPos.y);
 
-		this.displayContext.fillStyle = "#00FF00";
-		this.displayContext.fillRect(-12.5,-12.5, 5, 5);
+		debugMode(this.displayContext);
 
-		this.displayContext.strokeStyle = "#FF0000";
-		this.displayContext.beginPath();
-		this.displayContext.moveTo(-10,-10);
-		this.displayContext.lineTo(HordeGame.player.facing.x*10-10, HordeGame.player.facing.y*10-10);
-		this.displayContext.stroke();
-		this.displayContext.closePath();
 		this.displayContext.restore();
 	};
+
+	function debugMode(ctx){
+		ctx.fillStyle = "#00FF00";
+		ctx.fillRect(-12.5,-12.5, 5, 5);
+
+		ctx.strokeStyle = "#FF0000";
+		ctx.beginPath();
+		ctx.moveTo(-10,-10);
+		ctx.lineTo(HordeGame.player.facing.x*10-10, HordeGame.player.facing.y*10-10);
+		ctx.stroke();
+		ctx.closePath();
+
+		ctx.strokeStyle = "#0055FF";
+		ctx.beginPath();
+		ctx.moveTo(-10,-10);
+		ctx.lineTo(-(HordeGame.player.facing.y*10)-10, HordeGame.player.facing.x*10-10);
+		ctx.stroke();
+		ctx.closePath();
+
+		ctx.strokeStyle = "#00FF00";
+		ctx.beginPath();
+		ctx.moveTo(-10,-10);
+		ctx.lineTo(HordeGame.player.facing.y*10-10, -(HordeGame.player.facing.x*10)-10);
+		ctx.stroke();
+		ctx.closePath();
+	}
 
 	return HMapExport;
 }());

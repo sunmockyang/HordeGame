@@ -3,6 +3,10 @@ function Vector(x, y){
 	this.y = (typeof y != "undefined") ? y : 0;
 }
 
+Vector.prototype.set = function(x,y) {
+	this.x = x; this.y = y;
+};
+
 Vector.prototype.add = function(vec){
 	return new Vector((this.x + vec.x), (this.y + vec.y)); //{x: (this.x + vec.x), y: (this.y + vec.y)};
 }

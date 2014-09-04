@@ -1,21 +1,40 @@
 var HPlayer = HPlayer || (function(){
 	var size = 10;
 
-	function exports(context){
-		return new HPlayer(context);
+	function HPlayerExport(context, mouse, map){
+		return new HPlayer(context, mouse, map);
 	}
 
-	function HPlayer(context){
+	function HPlayer(context, mouse, map){
 		this.context = context;
-		this.pos = new Vector(this.context.canvas.width/2, this.context.canvas.height/2);
+		this.mouse = mouse;
+		this.map = map;
+		this.pos = new Vector();
+		this.facing = new Vector();
 	}
 
 	HPlayer.prototype.update = function() {
+
+		this.map.rotation = getMouseInput.call(this);
+		this.map.playerPos = this.pos;
 	};
+
+	function getMouseInput(){
+		var y = this.context.canvas.height/2 - this.mouse.y,
+		x = this.mouse.x - this.context.canvas.width/2,
+		rotation = Math.atan(x / y);
+		if(y < 0)
+			rotation += Math.PI;
+
+		this.facing = (new Vector(x, y)).normalize();
+
+		return rotation;
+	}
 
 	HPlayer.prototype.draw = function() {
 		this.context.fillStyle = "#FFFFFF";
-		this.context.fillRect(this.pos.x - size/2, this.pos.y - size/2, size, size);
+		// this.context.fillRect(this.pos.x - size/2, this.pos.y - size/2, size, size);
+		this.context.fillRect(this.context.canvas.width/2 - size/2, this.context.canvas.height/2 - size/2, size, size);
 	};
 
 	HPlayer.prototype.onkeydown = function(keyboard){
@@ -23,13 +42,13 @@ var HPlayer = HPlayer || (function(){
 
 		// up
 		if(keyboard.isKeyDown(KeyMap.Up, KeyMap.W)){
-			this.pos.y -= 1;
+			this.pos = this.pos.add(this.facing);
 			handled = true;
 		}
 
 		// down
 		if(keyboard.isKeyDown(KeyMap.Down, KeyMap.S)){
-			this.pos.y += 1;
+			this.pos.y -= 1;
 			handled = true;
 		}
 		
@@ -48,5 +67,5 @@ var HPlayer = HPlayer || (function(){
 		return handled;
 	};
 
-	return exports;
+	return HPlayerExport;
 }());

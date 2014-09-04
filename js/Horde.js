@@ -1,6 +1,6 @@
 var Horde = (function(){
 
-	function exports(canvasElement){
+	function HordeExport(canvasElement){
 		return new Horde(canvasElement);
 	}
 
@@ -9,18 +9,21 @@ var Horde = (function(){
 
 		this.canvas = canvas;
 		this.context = canvas.getContext("2d");
+		
 		this.mouse = new LibraryMouse(canvas);
-		this.keyboard = new KeyPressHandler();
-
-		this.player = new HPlayer(this.context);
-
 		this.initMouse();
+
+		this.keyboard = new KeyPressHandler();
 		this.initKeyboard();
+
+		this.map = new HMap(this.context, this.mouse);
+		this.player = new HPlayer(this.context, this.mouse, this.map);
 	};
 
 
 	Horde.prototype.update = function() {
 		// console.log("update");
+		this.map.update();
 		this.player.update();
 	};
 
@@ -28,6 +31,8 @@ var Horde = (function(){
 		// console.log("draw");
 		this.context.fillStyle = "#000000";
 		this.context.fillRect(0,0,this.context.canvas.width, this.context.canvas.height);
+
+		this.map.draw();
 		
 		this.player.draw();
 	};
@@ -80,6 +85,6 @@ var Horde = (function(){
 		}
 	};
 
-	return exports;
+	return HordeExport;
 
 }());

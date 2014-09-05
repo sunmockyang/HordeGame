@@ -9,15 +9,15 @@ Vector.prototype.set = function(x,y) {
 
 Vector.prototype.add = function(vec){
 	return new Vector((this.x + vec.x), (this.y + vec.y)); //{x: (this.x + vec.x), y: (this.y + vec.y)};
-}
+};
 
 Vector.prototype.sub = function(vec){
 	return new Vector((this.x - vec.x), (this.y - vec.y)); //{x: (this.x + vec.x), y: (this.y + vec.y)};
-}
+};
 
 Vector.prototype.mag = function(){
 	return Math.sqrt(Math.pow(this.x, 2) + Math.pow(this.y, 2));
-}
+};
 
 Vector.prototype.sqr = function() {
 	return new Vector(this.x)
@@ -94,8 +94,8 @@ Point.prototype.divide = function(scale){
 	return new Point((this.x / scale), (this.y / scale));
 }
 
-function Mathx(){}
+var Mathx = {};
 
-Mathx.prototype.Lerp = function(from, to, t) {
+Mathx.Lerp = function(from, to, t) {
     return (to - from) * t + from;
 };
